@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="http://localhost:8000/css/style.css">
     <title>揪團</title>
+    <style>
+        #passWordPoint {
+             display: none;
+             position: absolute; 
+             left: 380px;
+             width: 280;
+             height: 145;
+             padding: 15px; 
+             background: #f4f4f4;
+             border:1px solid #e5e5e5;
+             line-height: 28px;
+        }
+        #passWordPoint:before{
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            z-index: 1;
+            margin-top: -10px;
+            border: 10px solid transparent;
+            border-right-color: #e5e5e5;
+        }
+    </style>
 </head>
 <body>
     <div class="main">
@@ -27,9 +51,13 @@
                         <label for="userEmail" class="settingItemTitle row"><h3>信</h3><h3>箱:</h3></label>
                         <input type="email" value="" name="userEmail" id="userEmail" required>
                     </div>
-                    <div class="settingItem row">
+                    <div class="settingItem row" >
                         <label for="passWord" class="settingItemTitle row"><h3>密</h3><h3>碼:</h3></label>
-                        <input pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,13}$" type="passWord" value="" name="passWord" id="passWord" required>
+                        <input style="position: relative;" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,13}$" type="passWord" value="" name="passWord" id="passWord" title='至少包含一個大寫、小寫、數字，長度為6~13個字元' required>
+                        <ul id="passWordPoint">
+                            <li>長度為6~13字元</li>
+                            <li>至少包含一個大寫、小寫、數字</li>
+                        </ul>
                     </div>
                     <div class="settingItem row">
                         <label for="passWord2" class="settingItemTitle row"><h3>重</h3><h3>新</h3><h3>輸</h3><h3>入:</h3></label>
@@ -74,6 +102,13 @@
                 $('#imagePreview').prop('src', event.target.result);
             }
             reader.readAsDataURL(userimg);
+        })
+        //密碼規範提示
+        $("#passWord").on('focus',function(){
+           $("#passWordPoint").css('display','block')
+        })
+        $("#passWord").on('blur',function(){
+           $("#passWordPoint").css('display','none')
         })
         
         $('#registerform').on('submit', async function(e) {
