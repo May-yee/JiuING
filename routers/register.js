@@ -6,12 +6,6 @@ var crypto = require("crypto");
 const algorithm = 'aes-256-cbc';
 const key = crypto.randomBytes(32);
 const iv = crypto.randomBytes(16);
-var session = require("express-session");
-app.use(session({
-    secret: "Pa$$w0rd",
-    resave: true,
-    saveUninitialized: true
-}));
 
 var myStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -57,9 +51,9 @@ router.post("/login", function(req, res) {
                 let decrypted = decipher.update(rows[0].passWord, 'hex', 'utf8');
                 decrypted += decipher.final('utf8');    //解析密碼
                 console.log(decrypted);
-                req.session.userID = rows[0].memberID;
                 if(decrypted == req.body.passWord) {
-                    console.log(rows[0].memberID);
+                    req.session.userID = rows[0].memberID;
+                    console.log(req.session.userID)
                     res.send({
                         success: true, 
                         headShot: rows[0].headShot,
