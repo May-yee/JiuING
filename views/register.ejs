@@ -30,6 +30,10 @@
                     <div class="settingItem row">
                         <label for="passWord" class="settingItemTitle row"><h3>密</h3><h3>碼:</h3></label>
                         <input pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,13}$" type="passWord" value="" name="passWord" id="passWord" required>
+                        <ul id="passWordPoint">
+                            <li>長度為6~13字元</li>
+                            <li>至少包含一個大寫、小寫、數字</li>
+                        </ul>
                     </div>
                     <div class="settingItem row">
                         <label for="passWord2" class="settingItemTitle row"><h3>重</h3><h3>新</h3><h3>輸</h3><h3>入:</h3></label>
@@ -38,8 +42,11 @@
                     <div class="settingItem row">
                         <label for="birth" class="settingItemTitle row"><h3>生</h3><h3>日:</h3></label>
                         <input type="date" value="" name="birth" id="birth" required>
-                        <label for="birthBoolean" class="settingItemTitle row"><h3>公</h3><h3>開:</h3></label>
-                        <input type="checkbox" id="birthBoolean" name="birthBoolean">
+                        <label for="birthBoolean" class="row">
+                            <input type="checkbox" name="birthBoolean" id="birthBoolean">
+                            <div class="checkbox"></div>
+                            不公開
+                        </label>
                     </div>
                     <div class="settingItem row">
                         <label for="sex" class="settingItemTitle row"><h3>性</h3><h3>別:</h3></label>
@@ -75,6 +82,15 @@
             }
             reader.readAsDataURL(userimg);
         })
+
+        //密碼規範提示
+        $("#passWord").on('focus',function(){
+           $("#passWordPoint").css('display','block')
+        })
+        $("#passWord").on('blur',function(){
+           $("#passWordPoint").css('display','none')
+        })
+        
         
         $('#registerform').on('submit', async function(e) {
             e.preventDefault();

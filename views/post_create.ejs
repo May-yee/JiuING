@@ -46,12 +46,12 @@
                     <div class="settingItem row">
                         <label for="minPeople" class="settingItemTitle row"><h3>最</h3><h3>少</h3><h3>人</h3><h3>數:</h3></label>
                         <input type="number" value="0" name="minPeople"  min="0">
-                        <p class="remarks">(不限人數請選0)</p>
+                        <p class="remarks">(不限人數請填0)</p>
                     </div>
                     <div class="settingItem row">
                         <label for="maxPeople" class="settingItemTitle row"><h3>最</h3><h3>多</h3><h3>人</h3><h3>數:</h3></label>
                         <input type="number" value="0" name="maxPeople" min="0">
-                        <p class="remarks">(不限人數請選0)</p>
+                        <p class="remarks">(不限人數請填0)</p>
                     </div>
                     <div class="settingItem row">
                         <label for="price" class="settingItemTitle row"><h3>每</h3><h3>人</h3><h3>費</h3><h3>用:</h3></label>
@@ -66,9 +66,9 @@
                         <label for="introduction" class="settingItemTitle row"><h3>內</h3><h3>文:</h3></label>
                         <textarea name="introduction" id="" cols="30" rows="10"></textarea>
                     </div>
-                    <div class="btn_group">
+                    <div class="btn_group ">
                         <button class="btn btn_orange">確定</button>
-                        <a href="/ownMember" class="btn btn_gray">取消</a>
+                        <a href="/" class="btn btn_blue">取消</a>
                     </div>
                 </form>
             </div>
@@ -102,6 +102,13 @@
             }
         })
 
+        $(document).ready(function() {
+        // 獲取今天的日期
+        let today = new Date().toISOString().split('T')[0];
+        
+        // 設置最小日期為今天
+        $('input[type="date"]').attr('min', today);
+    });
 
     })
 
