@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost:8000/css/style.css">
+    <title>揪團</title>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="create">
+                <form action="" method="get">
+                    <div class="post_img">
+                        <img  id="imagePreview" src="" alt="">
+                    </div>
+                    <div class="settingItem row">
+                        <label class="settingItemTitle row"><h3>上</h3><h3>傳</h3><h3>圖</h3><h3>片:</h3></label>
+                        <input type="file" id="imageInput" accept="image/*" multiple="false">    
+                    </div>
+                    <div class="settingItem row">
+                        <label for="type" class="settingItemTitle row"><h3>類</h3><h3>別:</h3></label>
+                        <select name="type" id="">
+                            <option value="0">運動</option>
+                            <option value="1">手作</option>
+                            <option value="3">吃喝</option>
+                            <option value="3">電影</option>
+                            <option value="3">展覽</option>
+                            <option value="2">其他</option>
+                        </select>
+                    </div>
+                    <div class="settingItem row">
+                        <label for="title" class="settingItemTitle row"><h3>標</h3><h3>題:</h3></label>
+                        <input type="text" value="" name="title">
+                    </div>
+                    <div class="settingItem row">
+                        <label for="registeredDate" class="settingItemTitle row"><h3>揪</h3><h3>團</h3><h3>時</h3><h3>間:</h3></label>
+                        <input type="date" value="" name="registeredDate" style="margin-right: 20px;">
+                        <input type="time" value="" name="registeredTime">
+                    </div>
+                    <div class="settingItem row">
+                        <label for="activityDate" class="settingItemTitle row"><h3>活</h3><h3>動</h3><h3>時</h3><h3>間:</h3></label>
+                        <input type="date" value="" name="activityDate">
+                        <input type="time" value="" name="activityTime">
+                    </div>
+                    <div class="settingItem row">
+                        <label for="minPeople" class="settingItemTitle row"><h3>最</h3><h3>少</h3><h3>人</h3><h3>數:</h3></label>
+                        <input type="number" value="0" name="minPeople"  min="0">
+                        <p class="remarks">(不限人數請選0)</p>
+                    </div>
+                    <div class="settingItem row">
+                        <label for="maxPeople" class="settingItemTitle row"><h3>最</h3><h3>多</h3><h3>人</h3><h3>數:</h3></label>
+                        <input type="number" value="0" name="maxPeople" min="0">
+                        <p class="remarks">(不限人數請選0)</p>
+                    </div>
+                    <div class="settingItem row">
+                        <label for="price" class="settingItemTitle row"><h3>每</h3><h3>人</h3><h3>費</h3><h3>用:</h3></label>
+                        <input type="number" value="0" name="price" min="-1">
+                        <label for="priceCheck" class="row" id="ifprice">
+                            <input type="checkbox" name="priceCheck" id="priceCheck">
+                            <div class="checkbox"></div>
+                            各付各的
+                        </label>
+                    </div>
+                    <div class="settingItem">
+                        <label for="introduction" class="settingItemTitle row"><h3>內</h3><h3>文:</h3></label>
+                        <textarea name="introduction" id="" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="btn_group">
+                        <button class="btn btn_orange">確定</button>
+                        <a href="/ownMember" class="btn btn_gray">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="http://localhost:8000/js/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        const imageInput = document.getElementById('imageInput');
+        const previewImage = document.getElementById('imagePreview');
+        let originalImageURL = previewImage.src;
+    
+        imageInput.addEventListener('change', function() {
+          const file = this.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              previewImage.src = e.target.result;
+              originalImageURL = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+        
+        $('#ifprice').click( function(){
+            if($('input[name="priceCheck"]').prop("checked")){
+                $('input[name="price"]').val(-1);
+            }else{
+                $('input[name="price"]').val(0);
+            }
+        })
+
+
+    })
+
+
+</script>
+</html>

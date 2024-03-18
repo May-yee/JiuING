@@ -70,6 +70,10 @@ app.get("/post/:id",(req,res)=>{
     )  
 })
 
+//新增貼文
+app.get("/create",(req,res)=>{
+    res.render("post_create");
+})
 
 //登入者的貼文
 app.get("/ownpost/:id",(req,res)=>{
