@@ -124,7 +124,7 @@ app.get("/ownpost/:id",(req,res)=>{
 
 //登入者的會員頁面 
 app.get("/ownMember",(req,res)=>{
-    console.log(req.session.userID)
+    console.log(req.session.userID);
     res.render("own_member");
 })
 
