@@ -52,8 +52,7 @@ router.post("/login", function(req, res) {
                 decrypted += decipher.final('utf8');    //解析密碼
                 console.log(decrypted);
                 if(decrypted == req.body.passWord) {
-                    req.session.userID = rows[0].memberID;
-                    console.log(req.session.userID)
+                    req.session.userID = rows[0].userID;
                     res.send({
                         success: true, 
                         headShot: rows[0].headShot,
