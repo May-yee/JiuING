@@ -50,13 +50,32 @@ p{
 
 input,select{
     border: none;
-    padding: 4px;
+    padding: 3px;
     outline: #FFCC70 3px solid;
     border-radius: 4px;
     font-size: 16px;
 }
 input:focus{
     outline: #22668D 4px solid;
+}
+
+input[name="priceCheck"]{
+    opacity: 0;
+    position: absolute;
+    left: 0;
+}
+input[name="priceCheck"]:checked +div{
+    background-color: #FFCC70;
+}
+.checkbox{
+    width: 16px;
+    height: 16px;
+    border: #FFCC70 2px solid;
+    margin-right: 12px;
+}
+.settingItem .remarks{
+    font-size: 14px;
+    color: #969696;
 }
 /* ---------- *\
 	Layout
@@ -213,15 +232,81 @@ footer{
 \* ---------- */
 .jumbotron{
     margin: 50px 0;
-    justify-content: space-between;
+    width: 100%;
+    height: 480px;
+    background-image: url(../images/jumbo.jpg);
+    background-size: cover;
 }
-.jumbotron_img{
-    width: 450px;
-    height: 350px;
-    background-color: #969696;
+.jumbotron .mask{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: 0.5;
+
+}
+.jumbotron_content{
+    padding: 80px 0;
+    text-align: center;
+}
+.jumbotron_content h1{
+    margin-bottom: 4px;
+}
+.jumbotron_p{
+    margin: 40px auto;
+    width: 560px;
+    line-height: 32px;
+}
+/* post */
+.post_create_btn{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 10;
+}
+.post_create{
+    background-color: #FFCC70;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+}
+.post_create .line{
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.post_create .line:nth-child(2){
+    width: 4px;
+    height: 30px;
+}
+.post{
+    margin-top: 100px;
+}
+.post .btn_group{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 0;
+}
+.btn_orange.click{
+    background-color: #22668D;
+    color: #fff;
 }
 
-/* post */
+.post .btn_group .btn{
+    padding: 4px 12px;
+    font-size: 20px;
+}
+
+.filter_area label{
+    margin-right: 20px;
+}
 .post_area{
     display: flex;
     /* border: #000 1px solid; */
@@ -252,10 +337,8 @@ footer{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.mark_orange{
-    background-color: #FFCC70;
-    padding: 4px;
-    color: #000;
+.post_box .content_box{
+    width: auto;
     display: inline-block;
 }
 
@@ -683,4 +766,28 @@ footer{
 .settingEdit .btn_group{
     display:flex;
     justify-content: center;
+}
+
+/* ---------------- *\
+	post_create
+\* ---------------- */
+.create{
+    width: 100%;
+    border:#FFCC70 solid 4px ;
+    border-radius: 8px;
+    padding: 20px;
+}
+.create .post_img{
+    border: #000 solid 2px;
+    width: 480px;
+    height: 320px;
+    overflow: hidden;
+    text-align: center;
+}
+.create .post_img img{
+    height: 100%;
+}
+
+.create input{
+    margin-right: 20px;
 }
