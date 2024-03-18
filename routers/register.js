@@ -33,9 +33,9 @@ router.post("/", upload.single('headShot'), function(req,res){
     let encrypted = cipher.update(req.body.passWord, 'utf8', 'hex');
     encrypted += cipher.final('hex');   //  密碼加密
     var headShot = (req.file.path.substring(6)) //頭貼路徑
-    conn.query("insert into member (userName, password, userEmail, headShot, birth, birthBoolean, sex, cryptokey, cryptoiv) values (?,?,?,?,?,?,?,?,?)",
+    conn.query("insert into member (userName, password, userEmail, headShot, birth, birthBoolean, sex, introduction, cryptokey, cryptoiv) values (?,?,?,?,?,?,?,?,?,?)",
         [req.body.userName, encrypted, req.body.userEmail, headShot,
-        req.body.birth, req.body.birthBoolean, req.body.sex, key, iv],
+        req.body.birth, req.body.birthBoolean, req.body.sex, req.body.introduction, key, iv],
         function (err, rows) {
             res.send({success: true});
         }
