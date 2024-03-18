@@ -827,3 +827,13 @@ footer{
 .create .settingItem{
     border: none;
 }
+
+#map{
+    width: 400px;
+    height: 300px;
+    border: #000 2px solid;
+    border-radius: 4px;
+}
+#searchInput{
+    width: 400px;
+}

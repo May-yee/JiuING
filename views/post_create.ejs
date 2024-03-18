@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="http://localhost:8000/css/style.css">
-    <title>揪團</title>
+    <title>PO揪團</title>
 </head>
 <body>
     <div class="main">
@@ -44,6 +44,12 @@
                         <input type="time" value="" name="activityTime">
                     </div>
                     <div class="settingItem row">
+                        <label for="location" class="settingItemTitle row"><h3>地</h3><h3>點:</h3></label>
+                        <input id="searchInput" type="text">
+                        <button id="searchButton" class="btn btn_orange">查看地圖</button>
+                    </div>
+                    <div id="map" ></div>
+                    <div class="settingItem row">
                         <label for="minPeople" class="settingItemTitle row"><h3>最</h3><h3>少</h3><h3>人</h3><h3>數:</h3></label>
                         <input type="number" value="0" name="minPeople"  min="0">
                         <p class="remarks">(不限人數請填0)</p>
@@ -76,6 +82,7 @@
     </div>
 </body>
 <script src="http://localhost:8000/js/jquery-3.7.1.min.js"></script>
+
 <script>
     $(document).ready(function(){
         const imageInput = document.getElementById('imageInput');
@@ -103,15 +110,86 @@
         })
 
         $(document).ready(function() {
-        // 獲取今天的日期
-        let today = new Date().toISOString().split('T')[0];
-        
-        // 設置最小日期為今天
-        $('input[type="date"]').attr('min', today);
-    });
+            // 獲取今天的日期
+            let today = new Date().toISOString().split('T')[0];
+            
+            // 設置最小日期為今天
+            $('input[type="date"]').attr('min', today);
+        });        
 
     })
+    
+        //MAP
+        //設定地圖中心在使用者位置
+        function initMap() {
+            navigator.geolocation.getCurrentPosition((pos) => {
+                let lat = pos.coords.latitude;
+                let long = pos.coords.longitude;
+                localStorage.setItem("userlat",lat);
+                localStorage.setItem("userlng",long);
+            })
+            const userlat = parseFloat(localStorage.getItem('userlat'));
+            const userlng = parseFloat(localStorage.getItem('userlng'));
+            const userpos = { lat: userlat, lng: userlng }
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: userpos,
+                zoom: 12
+            });
 
+            var input = document.getElementById('searchInput');
+            var searchBox = new google.maps.places.SearchBox(input);
+
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+
+            searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                markers.forEach(function(marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+
+                    if (place.geometry.viewport) {
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+        }
+
+
+        //抓取使用者輸入的地址URL
+        document.getElementById('searchButton').addEventListener('click', function() {
+            // 獲取搜尋框中的值
+            var location = document.getElementById('searchInput').value;
+            var mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location);
+
+            window.open(mapUrl, '_blank');
+        });
 
 </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhQfrydFGx7ATRVJvlDe1tfESjqyHLeos&libraries=places&callback=initMap"></script>   
 </html>

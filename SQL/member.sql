@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-03-17 08:30:37
+-- 產生時間： 2024-03-18 07:57:17
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -36,15 +36,10 @@ CREATE TABLE `member` (
   `birth` date NOT NULL,
   `birthBoolean` tinyint(1) NOT NULL,
   `sex` int(5) UNSIGNED NOT NULL,
+  `introduce` varchar(1000) DEFAULT NULL,
   `cryptokey` blob NOT NULL,
   `cryptoiv` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 傾印資料表的資料 `member`
---
-
-
 
 --
 -- 已傾印資料表的索引
@@ -64,7 +59,7 @@ ALTER TABLE `member`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `memberID` int(4) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `memberID` int(4) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
