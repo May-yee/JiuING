@@ -1,11 +1,11 @@
 var express = require('express');
+var app = express();
 var router = express.Router();
 var multer = require('multer');
 var crypto = require("crypto");
 const algorithm = 'aes-256-cbc';
 const key = crypto.randomBytes(32);
 const iv = crypto.randomBytes(16);
-
 
 var myStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -19,6 +19,7 @@ var upload = multer({
     storage: myStorage,  // 設置 storage
 });
 var mysql = require("mysql");
+const exp = require('constants');
 var conn = mysql.createConnection({
     user: "root",
     password: "",
@@ -26,6 +27,7 @@ var conn = mysql.createConnection({
     port: 3306,
     database: "jiuing"
 });
+//註冊
 router.post("/", upload.single('headShot'), function(req,res){
     var cipher = crypto.createCipheriv(algorithm, key, iv);
     let encrypted = cipher.update(req.body.passWord, 'utf8', 'hex');
@@ -39,7 +41,7 @@ router.post("/", upload.single('headShot'), function(req,res){
         }
     )
 });
-
+//登入
 router.post("/login", function(req, res) {
     conn.query("select * from member where userEmail = ?",
         [req.body.userEmail],
@@ -50,6 +52,8 @@ router.post("/login", function(req, res) {
                 decrypted += decipher.final('utf8');    //解析密碼
                 console.log(decrypted);
                 if(decrypted == req.body.passWord) {
+                    req.session.userID = rows[0].memberID;
+                    console.log(req.session.userID)
                     res.send({
                         success: true, 
                         headShot: rows[0].headShot,

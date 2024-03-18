@@ -27,7 +27,7 @@
                         <label for="userEmail" class="settingItemTitle row"><h3>信</h3><h3>箱:</h3></label>
                         <input type="email" value="" name="userEmail" id="userEmail" required>
                     </div>
-                    <div class="settingItem row">
+                    <div class="settingItem row" >
                         <label for="passWord" class="settingItemTitle row"><h3>密</h3><h3>碼:</h3></label>
                         <input pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,13}$" type="passWord" value="" name="passWord" id="passWord" required>
                         <ul id="passWordPoint">
@@ -82,7 +82,6 @@
             }
             reader.readAsDataURL(userimg);
         })
-
         //密碼規範提示
         $("#passWord").on('focus',function(){
            $("#passWordPoint").css('display','block')

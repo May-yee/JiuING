@@ -6,6 +6,13 @@ app.listen(8000,()=>{
     console.log("正在運行");
 })
 
+var session = require("express-session");
+app.use(session({
+    secret: "Pa$$w0rd",
+    resave: true,
+    saveUninitialized: true
+}));
+
 var bp =require("body-parser");
 app.use(bp.urlencoded({extended:false}))
 app.set("view engine", "ejs");
@@ -117,6 +124,7 @@ app.get("/ownpost/:id",(req,res)=>{
 
 //登入者的會員頁面 
 app.get("/ownMember",(req,res)=>{
+    console.log(req.session.userID)
     res.render("own_member");
 })
 
