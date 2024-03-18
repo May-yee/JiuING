@@ -27,7 +27,7 @@
                 <p id="userName">會員名稱</p>
             </div>
         </div>
-        <div class="container">
+        <div class="container" id="loginddiv">
             <form class="logoIn"  action="post" id="logoInform">
                 <input type="text" name="userEmail" id="userEmail">
                 <input type="password" name="passWord" id="passWord">
@@ -105,8 +105,19 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     $("header .member_box").click(function (){
-        $(".logoIn").toggleClass("show");
+        $(".logoIn").addClass("show");   
     });
+   
+    $('body').click(function(e) {
+        var header = $("header .member_box");
+        var logoIn = $("#loginddiv");
+        console.log(logoIn.has(e.target).length, header.has(e.target).length)
+        if(!header.has(e.target).length && !logoIn.has(e.target).length) {
+            $(".logoIn").removeClass("show");  
+        }
+    })
+    
+    
     $("#logoInform").on('submit', async function(e) {
         e.preventDefault();
         
