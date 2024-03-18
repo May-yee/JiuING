@@ -95,7 +95,10 @@
                     config,
                 )
                 console.log(result.data['success']);
-                (result.data['success']) ? alert("註冊成功") : alert("註冊失敗")
+                if(result.data['success']) {
+                    alert("註冊成功");
+                    window.location = "/"
+                }
             }else {
                 alert("密碼輸入錯誤")
             }
