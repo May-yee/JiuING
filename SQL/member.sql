@@ -36,7 +36,7 @@ CREATE TABLE `member` (
   `birth` date NOT NULL,
   `birthBoolean` tinyint(1) NOT NULL,
   `sex` int(5) UNSIGNED NOT NULL,
-  `introduce` varchar(1000) DEFAULT NULL,
+  `introduction` varchar(1000) DEFAULT NULL,
   `cryptokey` blob NOT NULL,
   `cryptoiv` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
