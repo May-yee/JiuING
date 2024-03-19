@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
-
+var cors = require("cors");
+app.use(cors());
 
 app.listen(8000,()=>{
     console.log("正在運行");
@@ -140,3 +141,69 @@ app.get("/register",(req,res)=>{
 //導入註冊
 var register = require("./routers/register");
 app.use("/member/register", register);
+
+app.get("/index/post", function (req, res) {
+    conn.query("select * from post", [],
+        function (err, rows) {
+            res.send( JSON.stringify(rows) );
+        }
+    )
+})
+// 活動貼文
+app.get("/index/postitem/:id", function (req, res) {
+    conn.query("select * from post where postID = ?", 
+    [req.params.id],
+    function (err, rows) {
+        res.send( JSON.stringify(rows[0]) );
+    }
+)
+})
+
+app.get("/index/chatitem/:id", function (req, res) {
+    conn.query("select * from coment where com_postId = ?", 
+    [req.params.id],
+    function (err, rows) {
+        res.send( JSON.stringify(rows) );
+    }
+)
+})
+
+app.post("/post/create",function(req, res){
+    conn.query("insert into post (title, registeredDate, registeredTime, activityDate, activityTime, minPeople, maxPeople, location, price, content) values(?,?,?,?,?,?,?,?,?,?)",
+    [req.body.postItem.title, req.body.postItem.registeredDate, req.body.postItem.registeredTime, req.body.postItem.activityDate, req.body.postItem.activityTime, req.body.postItem.minPeople, req.body.postItem.maxPeople, req.body.postItem.location, req.body.postItem.price, req.body.postItem.content],
+    function(err, rows){
+        if (err) {
+            console.error("Error updating post:", err);
+            res.status(500).send("Error updating post");
+            return;
+        }
+        res.send( JSON.stringify( req.body.postItem ));
+    }     
+    )
+})
+
+app.put("/index/postitem",function(req, res){
+    conn.query("update post set title= ?, registeredDate= ?, registeredTime= ?, activityDate= ?, activityTime= ?, minPeople= ?, maxPeople= ?, location= ?, price= ?, content= ? where postID= ?",
+    [req.body.postItem.title, req.body.postItem.registeredDate, req.body.postItem.registeredTime, req.body.postItem.activityDate, req.body.postItem.activityTime, req.body.postItem.minPeople, req.body.postItem.maxPeople, req.body.postItem.location, req.body.postItem.price, req.body.postItem.content, req.body.postItem.postID],
+    function(err, rows){
+        if (err) {
+            console.error("Error updating post:", err);
+            res.status(500).send("Error updating post");
+            return;
+        }
+        res.send( JSON.stringify( req.body.postItem ));
+    }     
+    )
+})
+
+
+
+
+app.delete("/post/delete/:id", function (req, res) {
+    conn.query("delete from post where postID = ?",
+        [req.params.id], 
+        function (err, rows) {
+            res.send("#" + req.params.id + " deleted");
+        }
+    )
+})
